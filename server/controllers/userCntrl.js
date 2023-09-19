@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const prisma = require("../config/prismaConfig");
+const prisma = require("../config/prismaConfig.js");
 
 const createUser = asyncHandler(async (req, res) => {
   console.log("creating a user");
@@ -9,4 +9,4 @@ const createUser = asyncHandler(async (req, res) => {
   console.log(email);
 });
 
-module.exports = createUser;
+module.exports = { createUser };
