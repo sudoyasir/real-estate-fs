@@ -1,0 +1,86 @@
+{
+  "hash": "bbda0f64",
+  "browserHash": "86a8f9bd",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "ee3eb513",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "ed59e3ae",
+      "needsInterop": true
+    },
+    "react-icons/bi": {
+      "src": "../../node_modules/react-icons/bi/index.esm.js",
+      "file": "react-icons_bi.js",
+      "fileHash": "d5e65550",
+      "needsInterop": false
+    },
+    "react-icons/hi": {
+      "src": "../../node_modules/react-icons/hi/index.esm.js",
+      "file": "react-icons_hi.js",
+      "fileHash": "39888ebf",
+      "needsInterop": false
+    },
+    "react-outside-click-handler/build/OutsideClickHandler": {
+      "src": "../../node_modules/react-outside-click-handler/build/OutsideClickHandler.js",
+      "file": "react-outside-click-handler_build_OutsideClickHandler.js",
+      "fileHash": "9f26827a",
+      "needsInterop": true
+    },
+    "react-countup": {
+      "src": "../../node_modules/react-countup/build/index.js",
+      "file": "react-countup.js",
+      "fileHash": "c7fc9ad7",
+      "needsInterop": true
+    },
+    "framer-motion": {
+      "src": "../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "e5372f97",
+      "needsInterop": false
+    },
+    "react-accessible-accordion": {
+      "src": "../../node_modules/react-accessible-accordion/dist/es/index.js",
+      "file": "react-accessible-accordion.js",
+      "fileHash": "bd2e7c17",
+      "needsInterop": false
+    },
+    "swiper/react": {
+      "src": "../../node_modules/swiper/react/swiper-react.js",
+      "file": "swiper_react.js",
+      "fileHash": "7bab34d9",
+      "needsInterop": false
+    },
+    "react-icons/md": {
+      "src": "../../node_modules/react-icons/md/index.esm.js",
+      "file": "react-icons_md.js",
+      "fileHash": "6a15ecbc",
+      "needsInterop": false
+    },
+    "react-icons/bs": {
+      "src": "../../node_modules/react-icons/bs/index.esm.js",
+      "file": "react-icons_bs.js",
+      "fileHash": "c832d551",
+      "needsInterop": false
+    },
+    "react-icons/hi2": {
+      "src": "../../node_modules/react-icons/hi2/index.esm.js",
+      "file": "react-icons_hi2.js",
+      "fileHash": "82b632ac",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-A7SVCLWC": {
+      "file": "chunk-A7SVCLWC.js"
+    },
+    "chunk-HS7GO4I2": {
+      "file": "chunk-HS7GO4I2.js"
+    }
+  }
+}

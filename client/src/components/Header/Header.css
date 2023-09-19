@@ -1,0 +1,41 @@
+.h-wrapper{
+    background-color: var(--black);
+}
+.h-container{
+    justify-content: space-between;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: var(--secondary);
+}
+.h-menu{
+    gap: 2rem;
+}
+.h-menu>*:hover{
+    cursor: 2rem;
+}
+.menu-icon{
+    display: none;
+}
+
+
+@media (max-width: 768px) {
+    .menu-icon{
+        display: block;
+    }
+    .h-menu{
+        z-index: 99;
+        color: var(--black);
+        position: absolute;
+        top: 3rem;
+        right: 4rem;
+        background: white;
+        flex-direction: column;
+        font-weight: 500;
+        gap: 2rem;
+        padding: 3rem;
+        border-radius: 10px;
+        align-items: flex-start;
+        box-shadow: rgba(0, 0, 0, 0.05);
+        transition: all 300ms ease-in;
+    }
+}
