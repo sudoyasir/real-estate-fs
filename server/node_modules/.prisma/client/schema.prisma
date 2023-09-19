@@ -24,7 +24,7 @@ model Residency {
     price       Int
     address     String
     city        String
-    countru     String
+    country     String
     image       String
     facilities  Json
     userEmail   String

@@ -1,10 +1,9 @@
-const express = require("express");
-const createUser = require("../controllers/userCntrl.js");
-const asyncHandler = require("express-async-handler");
+import express from "express"
+import createUser from "../controllers/userCntrl.js"
 
-const userRouter = express.Router();
+const router = express.Router();
 
 // Routes and middlewares
-userRouter.post("/register", asyncHandler(createUser));
+router.post("/register", (createUser));
 
-module.exports = userRouter;
+export {router as userRoute} 
