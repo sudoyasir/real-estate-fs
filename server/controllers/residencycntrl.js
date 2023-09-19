@@ -34,7 +34,7 @@ const createResidency = expressAsyncHandler(async (req, res) => {
     });
 
     res.send({
-      message: "Residency Created Successfully!"
+      message: "Residency Created Successfully!",
     });
   } catch (err) {
     if (err.code === "P2002") {
@@ -48,10 +48,24 @@ const createResidency = expressAsyncHandler(async (req, res) => {
 const getAllResidencies = expressAsyncHandler(async (req, res) => {
   const residencies = await prisma.residency.findMany({
     orderBy: {
-      createdAt: "desc"
-    }
+      createdAt: "desc",
+    },
   });
   res.send(residencies);
 });
 
-export {createResidency, getAllResidencies}
+//function to get residency by id
+const getResidency = expressAsyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const residency = await prisma.residency.findUnique({
+      where: { id },
+    });
+    res.send(residency)
+  } catch (err) {
+    throw new Error(err.message);
+  }
+});
+
+export { createResidency, getAllResidencies, getResidency };
