@@ -16,7 +16,6 @@ const createResidency = expressAsyncHandler(async (req, res) => {
     userEmail,
   } = req.body.data;
 
-  console.log(req.body.data);
 
   try {
     const residency = await prisma.residency.create({
@@ -32,10 +31,11 @@ const createResidency = expressAsyncHandler(async (req, res) => {
         owner: { connect: { email: userEmail } },
       },
     });
-
+    console.log(`A new residency has been added with title "${residency.title}"`);
     res.send({
       message: "Residency Created Successfully!",
     });
+
   } catch (err) {
     if (err.code === "P2002") {
       throw new Error("A residency with this address already exists");

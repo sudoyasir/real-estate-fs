@@ -14,15 +14,16 @@ const createUser = asyncHandler(async (req, res) => {
       message: "User registered successfully",
       user: user,
     });
+    console.log(`${email} is registered successfully`);
   } else {
     res.status(201).json({
       message: "User already registered",
     });
+    console.log(`${email} is already registed in DataBase`);
   }
 });
 
 //function to book a visit
-
 const bookVisit = expressAsyncHandler(async (req, res) => {
   const { email, date } = req.body;
   const { id } = req.params;
@@ -36,23 +37,23 @@ const bookVisit = expressAsyncHandler(async (req, res) => {
       res
         .status(400)
         .json({ message: "This residency is already booked by you" });
+        console.log(`Visit by ${email} is already booked`);
     } else {
-      // Correct syntax for updating nested objects in Prisma
       await prisma.user.update({
         where: { email: email },
         data: {
           bookedVisits: {
-            push: { id, date }
-          }
+            push: { id, date },
+          },
         },
       });
       res.send("Your visit has been booked successfully");
+      console.log(`Visit for ${email} has been booked`);
     }
   } catch (err) {
     throw new Error(err.message);
   }
 });
-
 
 //function to get all the bookings of a user
 const getAllBookings = asyncHandler(async (req, res) => {
@@ -60,12 +61,45 @@ const getAllBookings = asyncHandler(async (req, res) => {
   try {
     const bookings = await prisma.user.findUnique({
       where: { email },
-      select: { bookedVisits: true }
+      select: { bookedVisits: true },
     });
-    res.status(200).send(bookings); // Use res.status(200) to set the status and send the data
+    res.status(200).send(bookings); 
+    console.log(`Booking(s) of ${email} is sent.`);
   } catch (err) {
     throw new Error(err.message);
   }
 });
 
-export { createUser, bookVisit, getAllBookings };
+//function to cancel booking
+const cancelBooking = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const { id } = req.params;
+
+  try {
+    
+    const user = await prisma.user.findUnique({
+      where: {email: email},
+      select: {bookedVisits: true}
+    })
+
+    const index = user.bookedVisits.findIndex((visit)=> visit.id === id)
+
+    if (index === -1) {
+      res.status(404).json({message: `Booking not found for ${email}`})
+    } else {
+      user.bookedVisits.splice(index, 1)
+      await prisma.user.update({
+        where: {email},
+        data: {
+          bookedVisits: user.bookedVisits
+        }
+      })
+
+      res.send("Booking cancelled successfully")
+    }
+
+  } catch (err) {
+    throw new Error(err.message)
+  }
+});
+export { createUser, bookVisit, getAllBookings, cancelBooking };
