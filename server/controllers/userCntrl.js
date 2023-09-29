@@ -138,4 +138,20 @@ const toFav = asyncHandler(async (req, res) => {
     throw new Error(err.message);
   }
 });
-export { createUser, bookVisit, getAllBookings, cancelBooking, toFav };
+
+//fuction to get all the fav residencies
+const getAllFavorites = asyncHandler(async(req, res)=>{
+  const {email} = req.body;
+  try {
+    
+    const favResd = await prisma.user.findUnique({
+      where: {email},
+      select: {favResidenciesiD: true}
+    })
+    res.status(200).send(favResd)
+
+  } catch (err) {
+    throw new Error(err.message)
+  }
+})
+export { createUser, bookVisit, getAllBookings, cancelBooking, toFav, getAllFavorites };
