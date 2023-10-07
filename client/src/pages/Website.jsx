@@ -13,7 +13,6 @@ export default function Website() {
     <div className="App">
       <div>
         <div className="white-gradient"></div>
-        <Header />
         <Hero />
       </div>
       <Companies />
@@ -21,7 +20,6 @@ export default function Website() {
       <Value />
       <Contact />
       <GetStarted />
-      <Footer />
     </div>
   );
 }
