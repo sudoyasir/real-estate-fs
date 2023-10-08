@@ -37,7 +37,7 @@ const bookVisit = expressAsyncHandler(async (req, res) => {
       res
         .status(400)
         .json({ message: "This residency is already booked by you" });
-        console.log(`Visit by ${email} is already booked`);
+      console.log(`Visit by ${email} is already booked`);
     } else {
       await prisma.user.update({
         where: { email: email },
@@ -63,7 +63,7 @@ const getAllBookings = asyncHandler(async (req, res) => {
       where: { email },
       select: { bookedVisits: true },
     });
-    res.status(200).send(bookings); 
+    res.status(200).send(bookings);
     console.log(`Booking(s) of ${email} is sent.`);
   } catch (err) {
     throw new Error(err.message);
@@ -76,33 +76,68 @@ const cancelBooking = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   try {
-    
     const user = await prisma.user.findUnique({
-      where: {email: email},
-      select: {bookedVisits: true}
-    })
+      where: { email: email },
+      select: { bookedVisits: true },
+    });
 
-    const index = user.bookedVisits.findIndex((visit)=> visit.id === id)
+    const index = user.bookedVisits.findIndex((visit) => visit.id === id);
 
     if (index === -1) {
-      res.status(404).json({message: `Booking not found for ${email}`})
+      res.status(404).json({ message: `Booking not found for ${email}` });
     } else {
-      user.bookedVisits.splice(index, 1)
+      user.bookedVisits.splice(index, 1);
       await prisma.user.update({
-        where: {email},
+        where: { email },
         data: {
-          bookedVisits: user.bookedVisits
-        }
-      })
+          bookedVisits: user.bookedVisits,
+        },
+      });
 
-      res.send("Booking cancelled successfully")
+      res.send("Booking cancelled successfully");
+      console.log(`Booking for ${email} has been cancelled`);
     }
-
   } catch (err) {
-    throw new Error(err.message)
+    throw new Error(err.message);
   }
 });
-<<<<<<< HEAD
+
+//function to add a residency in favourites of a user
+const toFav = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const { rid } = req.params;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (user.favResidenciesiD.includes(rid)) {
+      const updateUser = await prisma.user.update({
+        where: { email },
+        data: {
+          favResidenciesiD: {
+            set: user.favResidenciesiD.filter((id) => id !== rid),
+          },
+        },
+      });
+
+      res.send({ message: "Removed from favourites", user: updateUser });
+    } else {
+      const updateUser = await prisma.user.update({
+        where: { email },
+        data: {
+          favResidenciesiD: {
+            push: rid,
+          },
+        },
+      });
+      res.send({ message: "updated favourites", user: updateUser });
+    }
+  } catch (err) {
+    throw new Error(err.message);
+  }
+});
 
 //fuction to get all the fav residencies
 const getAllFavorites = asyncHandler(async(req, res)=>{
@@ -120,6 +155,3 @@ const getAllFavorites = asyncHandler(async(req, res)=>{
   }
 })
 export { createUser, bookVisit, getAllBookings, cancelBooking, toFav, getAllFavorites };
-=======
-export { createUser, bookVisit, getAllBookings, cancelBooking };
->>>>>>> parent of f897191 (created "add a residency to favourite" route)
