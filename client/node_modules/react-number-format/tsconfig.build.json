@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "noImplicitAny": true,
+    "outDir": "./types",
+    "declaration": true,
+    "skipLibCheck": true,
+    "emitDeclarationOnly": true
+  },
+  "include": ["src"]
+}
