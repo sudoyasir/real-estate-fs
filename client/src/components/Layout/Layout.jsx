@@ -17,7 +17,7 @@ const Layout = () => {
   });
 
   useEffect(() => {
-    const getTokenAndRegsiter = async () => {
+    const getTokenAndRegister = async () => {
       const res = await getAccessTokenWithPopup({
         authorizationParams: {
           audience: "http://localhost:8080",
@@ -26,10 +26,10 @@ const Layout = () => {
       });
       localStorage.setItem("access_token", res);
       setUserDetails((prev) => ({ ...prev, token: res }));
-      mutate(res);
+      mutate(res)
     };
 
-    isAuthenticated && getTokenAndRegsiter();
+    isAuthenticated && getTokenAndRegister()
   }, [isAuthenticated]);
 
   return (

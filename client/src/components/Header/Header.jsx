@@ -50,9 +50,7 @@ const Header = () => {
                 Login
               </button>
             ) : (
-              <button style={{backgroundColor: "transparent", border: 0, cursor: "pointer"}}>
-                <ProfileMenu user={user} logout={logout} />
-              </button>
+              <ProfileMenu user={user} logout={logout} />
             )}
           </div>
         </OutsideClickHandler>
