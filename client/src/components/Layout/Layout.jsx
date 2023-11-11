@@ -14,23 +14,32 @@ const Layout = () => {
   const { mutate } = useMutation({
     mutationKey: [user?.email],
     mutationFn: (token) => createUser(user?.email, token),
+    onError: (error) => {
+      console.error("An error occurred during mutation:", error);
+      // Handle the error appropriately
+    },
   });
 
   useEffect(() => {
     const getTokenAndRegister = async () => {
-      const res = await getAccessTokenWithPopup({
-        authorizationParams: {
+      try {
+        const res = await getAccessTokenWithPopup({
           audience: "http://localhost:8080",
           scope: "openid profile email",
-        },
-      });
-      localStorage.setItem("access_token", res);
-      setUserDetails((prev) => ({ ...prev, token: res }));
-      mutate(res)
+        });
+        localStorage.setItem("access_token", res); // Store the access token in local storage
+        setUserDetails((prev) => ({ ...prev, token: res }));
+        mutate(res);
+        console.log(res);
+      } catch (error) {
+        console.error("Error occurred while fetching access token:", error);
+        // Handle the error here or throw it for the parent component to handle
+      }
     };
-
+  
     isAuthenticated && getTokenAndRegister()
   }, [isAuthenticated]);
+  
 
   return (
     <>

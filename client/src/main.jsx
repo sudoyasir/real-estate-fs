@@ -13,13 +13,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       authorizationParams={{
         redirect_uri: "http://localhost:5173/",
       }}
-      audience="http://localhost:8080/"
+      audience="http://localhost:8080"
       scope="openid profile email"
     >
       <MantineProvider>
         <App />
       </MantineProvider>
-      ,
     </Auth0Provider>
   </React.StrictMode>
 );
