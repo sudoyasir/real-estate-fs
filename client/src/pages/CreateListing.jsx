@@ -1,13 +1,8 @@
 import { useState } from 'react';
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from 'firebase/storage';
 import { app } from '../firebase';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
@@ -60,30 +55,26 @@ export default function CreateListing() {
     }
   };
 
-  const storeImage = async (file) => {
-    return new Promise((resolve, reject) => {
-      const storage = getStorage(app);
-      const fileName = new Date().getTime() + file.name;
-      const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
-        },
-        (error) => {
-          reject(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            resolve(downloadURL);
-          });
-        }
+
+const storeImage = async (file) => {
+  return new Promise(async (resolve, reject) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'UPLOAD_PRESET'); // Replace this
+    formData.append('cloud_name', 'CLOUD_NAME'); // Replace this
+
+    try {
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/dflansvri/image/upload`,
+        formData
       );
-    });
-  };
+      resolve(res.data.secure_url); // Cloudinary returns secure_url
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 
   const handleRemoveImage = (index) => {
     setFormData({
